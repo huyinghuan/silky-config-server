@@ -4,9 +4,7 @@ const _async = require('async');
 
 class Project extends _Base{
   put(req, resp){
-
     if(!req.file){return resp.sendStatus(403)}
-
     let fileHash = req.params.hash;
     let projectName = req.params.projectName;
     let version = req.params.version;
@@ -19,14 +17,12 @@ class Project extends _Base{
           console.log(error);
           next(new Error({msg: "获取md5码失败"}))
         }
-
         if(md5 != fileHash){
           new Error({msg: "文件校验失败"})
         }
         next(null)
       })
     });
-
 
     _async.waterfall(queue, (error)=>{
       if(error){
@@ -35,6 +31,12 @@ class Project extends _Base{
       resp.sendStatus(200)
     })
 
+  }
+
+  get(req, resp){
+    let projectName = req.params.projectName;
+    let version = req.params.version;
+    //查询数据把文件扔出去
   }
 }
 

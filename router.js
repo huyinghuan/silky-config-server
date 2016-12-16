@@ -8,6 +8,10 @@ module.exports = {
       {
         path: "/p/:projectName/v/:version/h/:hash",
         biz: "project"
+      },
+      {
+        path: "/p/:projectName/v/:version",
+        biz: "project"
       }
     ]
   }],
