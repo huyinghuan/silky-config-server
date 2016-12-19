@@ -1,15 +1,20 @@
 const _Base = require('water-pit').Base;
 const _getMD5 = require("../lib/getMD5");
 const _async = require('async');
+const _bean = require('../bean/project');
+const _config = require('../config');
+const _path = require('path');
 
 class Project extends _Base{
   put(req, resp){
     if(!req.file){return resp.sendStatus(403)}
+    console.log(req.file)
     let fileHash = req.params.hash;
     let projectName = req.params.projectName;
     let version = req.params.version;
 
     let queue = []
+
     //检验文件是否完整
     queue.push((next)=>{
       _getMD5(req.file.path, (error, md5)=>{
@@ -24,6 +29,15 @@ class Project extends _Base{
       })
     });
 
+    queue.push((next)=>{
+      _bean.save({
+        name: projectName,
+        version: version,
+        hash: fileHash,
+        filename: req.file.filename
+      }, next)
+    });
+
     _async.waterfall(queue, (error)=>{
       if(error){
         return resp.status(403).send(error.msg || error)
@@ -34,9 +48,14 @@ class Project extends _Base{
   }
 
   get(req, resp){
+    console.log(req.params)
     let projectName = req.params.projectName;
     let version = req.params.version;
     //查询数据把文件扔出去
+    _bean.get(projectName, version, (error, project)=>{
+      resp.set('Content-Disposition', project.hash)
+      resp.sendFile(_path.join(_config.dest, project.filename))
+    })
   }
 }
 

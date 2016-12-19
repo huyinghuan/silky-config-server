@@ -1,3 +1,9 @@
 module.exports = {
-  dest: 'upload'
+  dest: 'upload',
+  database:{
+    "client":"sqlite3",
+    connection: {
+      filename: "./db.sqlite"
+    }
+  }
 }
