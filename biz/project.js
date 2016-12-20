@@ -53,8 +53,16 @@ class Project extends _Base{
     let version = req.params.version;
     //查询数据把文件扔出去
     _bean.get(projectName, version, (error, project)=>{
+      if(error){
+        console.log(error)
+        return resp.sendStatus(500)
+      }
       resp.set('Content-Disposition', project.hash)
-      resp.sendFile(_path.join(_config.dest, project.filename))
+      let filepath = _path.join(_config.dest, project.filename)
+      if(!_path.isAbsolute(_config.dest)){
+        filepath = _path.join(process.cwd(), filepath)
+      }
+      resp.sendFile(filepath)
     })
   }
 }
