@@ -1,3 +1,4 @@
+'use strict';
 const _multer = require('multer')
 const _config = require('../config')
 const _BaseFilter = require('water-pit').BaseFilter;

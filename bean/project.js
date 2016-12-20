@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 const _Coal = require('coal');
 const _config = require('../config');
 const _coal = new _Coal({database: _config.database, schema: 'schema'}, true);
