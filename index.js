@@ -10,4 +10,6 @@ const water = new _Waterpit(router, _routeMap);
 
 app.use('/', router)
 
-app.listen(9000)
+console.log('silky config server run in ' + 18866)
+
+app.listen(18866)
