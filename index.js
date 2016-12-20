@@ -1,7 +1,7 @@
+'use strict';
 const _express = require("express");
 const _routeMap = require('./router');
 _Waterpit = require('water-pit').Waterpit;
-
 
 const app = _express();
 const router = _express.Router();
