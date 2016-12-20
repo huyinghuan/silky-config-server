@@ -1,3 +1,4 @@
+'use strict'
 const _Base = require('water-pit').Base;
 const _getMD5 = require("../lib/getMD5");
 const _async = require('async');
