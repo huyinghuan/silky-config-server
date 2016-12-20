@@ -4,11 +4,12 @@ const _async = require('async');
 const _bean = require('../bean/project');
 const _config = require('../config');
 const _path = require('path');
+const _fs = require('fs');
 
 class Project extends _Base{
   put(req, resp){
     if(!req.file){return resp.sendStatus(403)}
-    console.log(req.file)
+    let clientIP = (req.headers['x-forwarded-for'] || req.connection.remoteAddress).replace('::ffff:', "");
     let fileHash = req.params.hash;
     let projectName = req.params.projectName;
     let version = req.params.version;
@@ -34,7 +35,8 @@ class Project extends _Base{
         name: projectName,
         version: version,
         hash: fileHash,
-        filename: req.file.filename
+        filename: req.file.filename,
+        clientIP: clientIP
       }, next)
     });
 
@@ -62,7 +64,13 @@ class Project extends _Base{
       if(!_path.isAbsolute(_config.dest)){
         filepath = _path.join(process.cwd(), filepath)
       }
-      resp.sendFile(filepath)
+      if(_fs.existsSync(filepath)){
+        resp.sendFile(filepath)
+      }else{
+        resp.status(404)
+        resp.send("config file lost!")
+      }
+
     })
   }
 }

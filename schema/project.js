@@ -4,7 +4,9 @@ module.exports = {
       name: "string",
       version: "integer",
       hash: "string",
-      filename: "string"
+      filename: "string",
+      clientIP: "string",
+      author: "string"
     },
     auto_create_at: true,
     auto_update_at: true
