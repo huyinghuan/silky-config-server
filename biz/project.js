@@ -31,6 +31,19 @@ class Project extends _Base{
       })
     });
 
+    //查看是否存在同项目同版本的配置文件
+    queue.push((next)=>{
+      _bean.get(projectName, version, (error, project)=>{
+        let existsFileHash = project ? project.hash : undefined;
+        if(existsFileHash == fileHash){
+          next({break: true})
+        }else{
+          next(null)
+        }
+      })
+    })
+
+    //保存文件
     queue.push((next)=>{
       _bean.save({
         name: projectName,
@@ -42,6 +55,10 @@ class Project extends _Base{
     });
 
     _async.waterfall(queue, (error)=>{
+      if(error && error.break){
+        console.log('配置文件已存在')
+        return resp.sendStatus(200)
+      }
       if(error){
         return resp.status(403).send(error.msg || error)
       }
