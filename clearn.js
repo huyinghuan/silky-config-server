@@ -5,4 +5,5 @@ _bean.remove((err, result)=>{
     }else{
         console.log(result)
     }
+    process.exit(0)
 })
