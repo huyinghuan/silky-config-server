@@ -68,7 +68,6 @@ class Project extends _Base{
   }
 
   get(req, resp){
-    console.log(req.params)
     let projectName = req.params.projectName;
     let version = req.params.version;
     //查询数据把文件扔出去
@@ -76,6 +75,9 @@ class Project extends _Base{
       if(error){
         console.log(error)
         return resp.sendStatus(500)
+      }
+      if(!project){
+        return resp.sendStatus(404)
       }
       resp.set('Content-Disposition', project.hash)
       let filepath = _path.join(_config.dest, project.filename)
@@ -89,6 +91,16 @@ class Project extends _Base{
         resp.send("config file lost!")
       }
 
+    })
+  }
+  getAll(req,resp){
+    _bean.getAll((err, list)=>{
+      if(err){
+        console.log(err)
+        resp.sendStatus(500)
+      }else{
+        resp.send(list)
+      }
     })
   }
 }

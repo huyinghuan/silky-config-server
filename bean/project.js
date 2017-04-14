@@ -20,6 +20,10 @@ class Project{
     sql = `${sql} order by create_at DESC limit 1`
     this.model.sql(sql, query).then((result)=>{cb(null, result[0])}).catch((e)=>{cb(e)})
   }
+  getAll(cb){
+    this.model.sql(`SELECT DISTINCT name FROM project`)
+      .then((result)=>{cb(null, result)}).catch((e)=>{cb(e)})
+  }
 }
 
 module.exports = new Project()

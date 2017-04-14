@@ -13,6 +13,12 @@ module.exports = {
       {
         path: "/p/:projectName/v/:version",
         biz: "project"
+      },{
+        path: "/config/all",
+        biz: "project",
+        methods:{
+          GET: "getAll"
+        }
       }
     ]
   }],
