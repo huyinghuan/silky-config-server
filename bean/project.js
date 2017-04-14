@@ -24,6 +24,10 @@ class Project{
     this.model.sql(`SELECT DISTINCT name FROM project`)
       .then((result)=>{cb(null, result)}).catch((e)=>{cb(e)})
   }
+  remove(cb){
+   this.model.sql(`delete from project where id > 1`)
+      .then((result)=>{cb(null, result)}).catch((e)=>{cb(e)}) 
+  }
 }
 
 module.exports = new Project()
