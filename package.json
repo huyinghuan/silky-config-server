@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js --harmony"
+    "start": "node index.js --harmony",
+    "clean": "node clearn.js --harmony"
   },
   "repository": {
     "type": "git",
