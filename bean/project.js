@@ -25,7 +25,7 @@ class Project{
       .then((result)=>{cb(null, result)}).catch((e)=>{cb(e)})
   }
   remove(cb){
-   this.model.sql(`delete from project where id > 1`)
+   this.model.sql(`delete from project where id > 0`)
       .then((result)=>{cb(null, result)}).catch((e)=>{cb(e)}) 
   }
 }
