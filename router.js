@@ -14,6 +14,9 @@ module.exports = {
         path: "/p/:projectName/v/:version",
         biz: "project"
       },{
+        path: "/p/:projectName",
+        biz: "project"
+      },{
         path: "/config/all",
         biz: "project",
         methods:{
